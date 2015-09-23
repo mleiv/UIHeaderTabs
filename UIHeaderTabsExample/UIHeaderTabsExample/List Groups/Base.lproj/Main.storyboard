@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="EDF-di-e8I">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <scenes>
+        <!--List Groups Controller-->
+        <scene sceneID="s25-Af-rAk">
+            <objects>
+                <viewController id="EDF-di-e8I" customClass="ListGroupsController" customModule="UIHeaderTabsExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="gqM-r6-kPT"/>
+                        <viewControllerLayoutGuide type="bottom" id="WDW-cO-aAa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kBX-r6-mZI">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j1M-WW-lQM">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygj-0x-q3M" userLabel="Tabs" customClass="UIHeaderTabs" customModule="UIHeaderTabsExample" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="segments">
+                                                <integer key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="selectedSegmentIndex">
+                                                <integer key="value" value="0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="segmentTitles" value="IBExampleTab1, IBExampleTab2"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bz2-dv-F0y" userLabel="Page Controller">
+                                        <rect key="frame" x="0.0" y="32" width="600" height="548"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="ygj-0x-q3M" firstAttribute="top" secondItem="j1M-WW-lQM" secondAttribute="top" id="7PR-gp-QVd"/>
+                                    <constraint firstItem="bz2-dv-F0y" firstAttribute="leading" secondItem="j1M-WW-lQM" secondAttribute="leading" id="K4G-a6-yXk"/>
+                                    <constraint firstAttribute="bottom" secondItem="bz2-dv-F0y" secondAttribute="bottom" id="MM8-Ga-KRq"/>
+                                    <constraint firstItem="ygj-0x-q3M" firstAttribute="leading" secondItem="j1M-WW-lQM" secondAttribute="leading" id="UR6-t3-nqN"/>
+                                    <constraint firstItem="bz2-dv-F0y" firstAttribute="top" secondItem="ygj-0x-q3M" secondAttribute="bottom" constant="2" id="bGR-C4-W1L"/>
+                                    <constraint firstAttribute="trailing" secondItem="bz2-dv-F0y" secondAttribute="trailing" id="fVe-Tn-lR8"/>
+                                    <constraint firstAttribute="trailing" secondItem="ygj-0x-q3M" secondAttribute="trailing" id="gFu-TU-dhh"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="j1M-WW-lQM" firstAttribute="leading" secondItem="kBX-r6-mZI" secondAttribute="leading" id="3LO-OG-Hoz"/>
+                            <constraint firstItem="WDW-cO-aAa" firstAttribute="top" secondItem="j1M-WW-lQM" secondAttribute="bottom" id="NNU-aK-Rap"/>
+                            <constraint firstAttribute="trailing" secondItem="j1M-WW-lQM" secondAttribute="trailing" id="r8D-SR-oeU"/>
+                            <constraint firstItem="j1M-WW-lQM" firstAttribute="top" secondItem="gqM-r6-kPT" secondAttribute="bottom" id="rhT-u5-scL"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pageControllerWrapper" destination="bz2-dv-F0y" id="eW6-ka-wUU"/>
+                        <outlet property="tabs" destination="ygj-0x-q3M" id="xrg-eg-tj4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MGs-Sd-hEp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="495" y="129"/>
+        </scene>
+    </scenes>
+</document>
