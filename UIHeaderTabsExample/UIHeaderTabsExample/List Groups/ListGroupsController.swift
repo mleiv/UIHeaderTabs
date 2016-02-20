@@ -12,35 +12,49 @@ import UIKit
 
 class ListGroupsController: UIViewController, TabGroupsControllable {
 
-    @IBOutlet weak var tabs: UIHeaderTabs!
-    @IBOutlet weak var pageControllerWrapper: UIView!
-    
     var pageLoaded = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        for _ in orderedGroups.indices {
-            controllerStoryboards.append("List")
-        }
-        print(orderedGroups)
-        setupTabGroups()
+        setupTabs()
         pageLoaded = true
     }
     
     // MARK: TabGroupsControllable protocol
     
-    var pageViewController: UIPageViewController?
-    var controllers: [UIViewController] = []
-    var controllerStoryboards: [String] = []
-    var orderedGroups: [String] = ["Friends", "Enemies"]
-    var currentIndex = 0
+    @IBOutlet weak var tabs: UIHeaderTabs!
+    @IBOutlet weak var tabsContentWrapper: UIView!
+    
+    var tabNames: [String] = ["Friends", "Enemies"]
+    
+    func tabControllersInitializer(tabName: String) -> UIViewController? {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        switch tabName {
+            case "Friends":
+                let controller = UIStoryboard(name: "List", bundle: bundle).instantiateInitialViewController() as? ListController
+                // set some custom values here (mine happen to be trivial):
+                controller?.group = "Friends"
+                return controller
+            case "Enemies":
+                // can use any controller/storyboard here (mine happen to be the same):
+                let controller = UIStoryboard(name: "List", bundle: bundle).instantiateInitialViewController() as? ListController
+                controller?.group = "Enemies"
+                return controller
+            default: return nil
+        }
+    }
+    
+    // only used internally:
+    var tabsPageViewController: UIPageViewController?
+    var tabControllers: [String: UIViewController] = [:]
+    var tabCurrentIndex: Int = 0
    
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        return handlePageViewController(pageViewController, viewControllerBeforeViewController: viewController)
+        return handleTabsPageViewController(pageViewController, viewControllerBeforeViewController: viewController)
     }
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        return handlePageViewController(pageViewController, viewControllerAfterViewController: viewController)
+        return handleTabsPageViewController(pageViewController, viewControllerAfterViewController: viewController)
     }
     func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        handlePageViewController(pageViewController, didFinishAnimating: finished, previousViewControllers: previousViewControllers, transitionCompleted: completed)
+        handleTabsPageViewController(pageViewController, didFinishAnimating: finished, previousViewControllers: previousViewControllers, transitionCompleted: completed)
     }
 }

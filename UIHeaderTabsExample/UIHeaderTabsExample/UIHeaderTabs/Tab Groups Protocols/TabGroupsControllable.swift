@@ -17,122 +17,131 @@ public protocol TabGroupsControllable: class, UIPageViewControllerDataSource, UI
 
     // implement in controller:
     var tabs: UIHeaderTabs! { get } // @IBOutlet
-    var pageControllerWrapper: UIView! { get } // @IBOutlet
-    var controllerStoryboards: [String] { get }
-    var orderedGroups: [String] { get }
-    var pageViewController: UIPageViewController? { get set }
-    var controllers: [UIViewController] { get set }
-    var currentIndex: Int { get set }
+    var tabsContentWrapper: UIView! { get } // @IBOutlet
+    var tabNames: [String] { get }
+    func tabControllersInitializer(tabName: String) -> UIViewController?
+    // only used internally:
+    var tabsPageViewController: UIPageViewController? { get set }
+    var tabControllers: [String: UIViewController] { get set }
+    var tabCurrentIndex: Int { get set }
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
     func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
-    
-    // call this element in viewDidLoad(), after setting up orderedGroups and controllerStoryboards
-    func setupTabGroups()
 
     // public, but require no additional code in implementing controller
-    func handlePageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
-    func handlePageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
-    func handlePageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
-    func switchToPage(controller: UIViewController)
+    func setupTabs()
+    func handleTabsPageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
+    func handleTabsPageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
+    func handleTabsPageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool)
+    func switchToTab(controller: UIViewController)
 }
 
 extension TabGroupsControllable where Self: UIViewController {
-    
-    public func setupTabGroups() {
-        setupGroups()
-        setupPageControl()
-        setupPageViewController()
+
+    public func setupTabs() {
+        setupTabPages()
+        setupTabsPageControl()
+        setupTabsPageViewController()
     }
     
-    private func setupGroups() {
-        for (index, group) in orderedGroups.enumerate() {
-            let storyboardObj = UIStoryboard(name: controllerStoryboards[index], bundle: NSBundle.mainBundle())
-            if let viewController = storyboardObj.instantiateInitialViewController() {
-                if let groupController = viewController as? TabGroupControllable {
-                    groupController.group = group
-                    groupController.groupIndex = index
-                    groupController.groupsController = self
-                }
-                controllers.append(viewController)
+    private func selectNewTabIndex() -> Int {
+        return 0
+    }
+    
+    private func setupTabPages() {
+        for tabName in tabNames {
+            let tabController = tabControllersInitializer(tabName) ?? UIViewController() // fill index no matter what
+            tabControllers[tabName] = tabController
+        }
+    }
+
+    private func setupTabsPageControl() {
+        tabs.segments = tabNames.count
+        tabs.segmentTitles = tabNames.joinWithSeparator(",")
+        tabs.selectedSegmentIndex = tabCurrentIndex
+        tabs.onClick = { [weak self] index in
+            let tabName = self?.tabNames[index] ?? ""
+            if let tabController = self?.tabControllers[tabName] {
+                self?.switchToTab(tabController)
             }
         }
     }
 
-    private func setupPageViewController() {
-        let pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
-        pageViewController.dataSource = self
-        pageViewController.delegate = self
-        pageViewController.setViewControllers([controllers[currentIndex] as UIViewController], direction: .Forward, animated: false, completion: nil)
-        pageViewController.willMoveToParentViewController(self)
-        self.addChildViewController(pageViewController)
-        pageViewController.didMoveToParentViewController(self)
-        pageControllerWrapper.addSubview(pageViewController.view)
-        pageViewController.view.translatesAutoresizingMaskIntoConstraints = false
-        pageViewController.view.leadingAnchor.constraintEqualToAnchor(pageControllerWrapper.leadingAnchor).active = true
-        pageViewController.view.trailingAnchor.constraintEqualToAnchor(pageControllerWrapper.trailingAnchor).active = true
-        pageViewController.view.topAnchor.constraintEqualToAnchor(pageControllerWrapper.topAnchor).active = true
-        pageViewController.view.bottomAnchor.constraintEqualToAnchor(pageControllerWrapper.bottomAnchor).active = true
-        self.pageViewController = pageViewController
-    }
-
-    private func setupPageControl() {
-        tabs.segments = orderedGroups.count
-        tabs.segmentTitles = orderedGroups.map{ $0 }.joinWithSeparator(",")
-        tabs.selectedSegmentIndex = currentIndex
-        tabs.onClick = { [weak self] index in
-            self?.switchToPage(controllers[index])
+    private func setupTabsPageViewController() {
+        let currentIndex = tabCurrentIndex < tabNames.count ? tabCurrentIndex : 0
+        guard let currentController = tabControllers[tabNames[currentIndex]]
+        else {
+            return
         }
+        let tabsPageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
+        tabsPageViewController.dataSource = self
+        tabsPageViewController.delegate = self
+        tabsPageViewController.setViewControllers([currentController], direction: .Forward, animated: false, completion: nil)
+        tabsPageViewController.willMoveToParentViewController(self)
+        self.addChildViewController(tabsPageViewController)
+        tabsPageViewController.didMoveToParentViewController(self)
+        tabsContentWrapper.addSubview(tabsPageViewController.view)
+        tabsPageViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        tabsPageViewController.view.leadingAnchor.constraintEqualToAnchor(tabsContentWrapper.leadingAnchor).active = true
+        tabsPageViewController.view.trailingAnchor.constraintEqualToAnchor(tabsContentWrapper.trailingAnchor).active = true
+        tabsPageViewController.view.topAnchor.constraintEqualToAnchor(tabsContentWrapper.topAnchor).active = true
+        tabsPageViewController.view.bottomAnchor.constraintEqualToAnchor(tabsContentWrapper.bottomAnchor).active = true
+        self.tabsPageViewController = tabsPageViewController
     }
 
-    public func handlePageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    public func handleTabsPageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
 
-        if let controller = viewController as? TabGroupControllable {
-            let prevIndex = controller.groupIndex - 1
-            if 0..<controllers.count ~= prevIndex {
-                let prevController = controllers[prevIndex]
+        if let tabName = tabControllers.keys.filter(({ self.tabControllers[$0] === viewController})).first,
+            index = tabNames.indexOf(tabName) {
+            tabCurrentIndex = index
+            let prevIndex = tabCurrentIndex - 1
+            if 0..<tabControllers.count ~= prevIndex {
+                let prevController = tabControllers[tabNames[prevIndex]]
                 return prevController
             }
         }
         return nil
     }
 
-    public func handlePageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    public func handleTabsPageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
 
-        if let controller = viewController as? TabGroupControllable {
-            let nextIndex = controller.groupIndex + 1
-            if 0..<controllers.count ~= nextIndex {
-                let nextController = controllers[nextIndex]
+        if let tabName = tabControllers.keys.filter(({ self.tabControllers[$0] === viewController})).first,
+            index = tabNames.indexOf(tabName) {
+            tabCurrentIndex = index
+            let nextIndex = tabCurrentIndex + 1
+            if 0..<tabControllers.count ~= nextIndex {
+                let nextController = tabControllers[tabNames[nextIndex]]
                 return nextController
             }
         }
         return nil
     }
 
-    public func handlePageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    public func handleTabsPageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
     
-        if completed {
-            if let controller = pageViewController.viewControllers?.last as? TabGroupControllable {
-                currentIndex = controller.groupIndex
-            }
-            tabs.selectedSegmentIndex = currentIndex
+        if completed, let
+            controller = pageViewController.viewControllers?.last,
+            tabName = tabControllers.keys.filter(({ self.tabControllers[$0] === controller})).first,
+            index = tabNames.indexOf(tabName) {
+            tabCurrentIndex = index
+            tabs.selectedSegmentIndex = tabCurrentIndex
         }
     }
     
-    public func switchToPage(controller: UIViewController) {
+    public func switchToTab(controller: UIViewController) {
         var direction = UIPageViewControllerNavigationDirection.Forward
-        if let groupController = controller as? TabGroupControllable {
-            if groupController.groupIndex == currentIndex {
-//                return //?
+        if let tabName = tabControllers.keys.filter(({ self.tabControllers[$0] === controller})).first,
+            index = tabNames.indexOf(tabName) {
+            guard index != tabCurrentIndex else {
+                return // do nothing
             }
-            direction = groupController.groupIndex > currentIndex ? .Forward : .Reverse
-            currentIndex = groupController.groupIndex
-            tabs.selectedSegmentIndex = currentIndex
+            direction = index > tabCurrentIndex ? .Forward : .Reverse
+            tabCurrentIndex = index
+            tabs.selectedSegmentIndex = tabCurrentIndex
         }
-        pageViewController?.setViewControllers([controller], direction: direction, animated: true, completion: { finished in
+        tabsPageViewController?.setViewControllers([controller], direction: direction, animated: true, completion: { finished in
             dispatch_async(dispatch_get_main_queue(), {
-                self.pageViewController?.setViewControllers([controller], direction: .Forward, animated: false, completion: nil)
+                self.tabsPageViewController?.setViewControllers([controller], direction: .Forward, animated: false, completion: nil)
             })
         })
-    }
-}
+    }}

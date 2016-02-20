@@ -10,15 +10,13 @@
 
 import UIKit
 
-class ListController: UITableViewController, TabGroupControllable {
+class ListController: UITableViewController {
 
     // loaded dynamically
     lazy var list: [String] = []
     
     // set by page controller parent
     var group: String = "Friends"
-    var groupIndex: Int = 0
-    weak var groupsController: UIViewController?
     
     var isUpdating = true
     

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="EDF-di-e8I">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10102" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="EDF-di-e8I">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10080"/>
     </dependencies>
     <scenes>
         <!--List Groups Controller-->
@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygj-0x-q3M" userLabel="Tabs" customClass="UIHeaderTabs" customModule="UIHeaderTabsExample" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="50.5"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="segments">
                                                 <integer key="value" value="2"/>
@@ -32,7 +32,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bz2-dv-F0y" userLabel="Page Controller">
-                                        <rect key="frame" x="0.0" y="32" width="600" height="548"/>
+                                        <rect key="frame" x="0.0" y="52.5" width="600" height="527.5"/>
                                     </view>
                                 </subviews>
                                 <constraints>
@@ -55,8 +55,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="pageControllerWrapper" destination="bz2-dv-F0y" id="eW6-ka-wUU"/>
                         <outlet property="tabs" destination="ygj-0x-q3M" id="xrg-eg-tj4"/>
+                        <outlet property="tabsContentWrapper" destination="bz2-dv-F0y" id="w6I-Yi-bv9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MGs-Sd-hEp" userLabel="First Responder" sceneMemberID="firstResponder"/>

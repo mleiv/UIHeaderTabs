@@ -10,16 +10,15 @@
 		B0ED8A161BB33DB900A5E638 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ED8A151BB33DB900A5E638 /* AppDelegate.swift */; };
 		B0ED8A1D1BB33DB900A5E638 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B0ED8A1C1BB33DB900A5E638 /* Assets.xcassets */; };
 		B0ED8A201BB33DB900A5E638 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0ED8A1E1BB33DB900A5E638 /* LaunchScreen.storyboard */; };
-		B0ED8A411BB33DFD00A5E638 /* UIHeaderTab.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0ED8A381BB33DFD00A5E638 /* UIHeaderTab.xib */; settings = {ASSET_TAGS = (); }; };
-		B0ED8A421BB33DFD00A5E638 /* UIHeaderTabsNib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0ED8A3A1BB33DFD00A5E638 /* UIHeaderTabsNib.xib */; settings = {ASSET_TAGS = (); }; };
-		B0ED8A431BB33DFD00A5E638 /* TabGroupControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ED8A3D1BB33DFD00A5E638 /* TabGroupControllable.swift */; settings = {ASSET_TAGS = (); }; };
-		B0ED8A441BB33DFD00A5E638 /* TabGroupsControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ED8A3E1BB33DFD00A5E638 /* TabGroupsControllable.swift */; settings = {ASSET_TAGS = (); }; };
-		B0ED8A451BB33DFD00A5E638 /* UIHeaderTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ED8A3F1BB33DFD00A5E638 /* UIHeaderTab.swift */; settings = {ASSET_TAGS = (); }; };
-		B0ED8A461BB33DFD00A5E638 /* UIHeaderTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ED8A401BB33DFD00A5E638 /* UIHeaderTabs.swift */; settings = {ASSET_TAGS = (); }; };
-		B0ED8A4F1BB33FF300A5E638 /* List.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0ED8A481BB33FF300A5E638 /* List.storyboard */; settings = {ASSET_TAGS = (); }; };
-		B0ED8A501BB33FF300A5E638 /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ED8A4A1BB33FF300A5E638 /* ListController.swift */; settings = {ASSET_TAGS = (); }; };
-		B0ED8A511BB33FF300A5E638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0ED8A4C1BB33FF300A5E638 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
-		B0ED8A521BB33FF300A5E638 /* ListGroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ED8A4E1BB33FF300A5E638 /* ListGroupsController.swift */; settings = {ASSET_TAGS = (); }; };
+		B0ED8A411BB33DFD00A5E638 /* UIHeaderTab.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0ED8A381BB33DFD00A5E638 /* UIHeaderTab.xib */; };
+		B0ED8A421BB33DFD00A5E638 /* UIHeaderTabsNib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0ED8A3A1BB33DFD00A5E638 /* UIHeaderTabsNib.xib */; };
+		B0ED8A441BB33DFD00A5E638 /* TabGroupsControllable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ED8A3E1BB33DFD00A5E638 /* TabGroupsControllable.swift */; };
+		B0ED8A451BB33DFD00A5E638 /* UIHeaderTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ED8A3F1BB33DFD00A5E638 /* UIHeaderTab.swift */; };
+		B0ED8A461BB33DFD00A5E638 /* UIHeaderTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ED8A401BB33DFD00A5E638 /* UIHeaderTabs.swift */; };
+		B0ED8A4F1BB33FF300A5E638 /* List.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0ED8A481BB33FF300A5E638 /* List.storyboard */; };
+		B0ED8A501BB33FF300A5E638 /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ED8A4A1BB33FF300A5E638 /* ListController.swift */; };
+		B0ED8A511BB33FF300A5E638 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B0ED8A4C1BB33FF300A5E638 /* Main.storyboard */; };
+		B0ED8A521BB33FF300A5E638 /* ListGroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0ED8A4E1BB33FF300A5E638 /* ListGroupsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +29,6 @@
 		B0ED8A211BB33DB900A5E638 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0ED8A391BB33DFD00A5E638 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/UIHeaderTab.xib; sourceTree = "<group>"; };
 		B0ED8A3B1BB33DFD00A5E638 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/UIHeaderTabsNib.xib; sourceTree = "<group>"; };
-		B0ED8A3D1BB33DFD00A5E638 /* TabGroupControllable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabGroupControllable.swift; sourceTree = "<group>"; };
 		B0ED8A3E1BB33DFD00A5E638 /* TabGroupsControllable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabGroupsControllable.swift; sourceTree = "<group>"; };
 		B0ED8A3F1BB33DFD00A5E638 /* UIHeaderTab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIHeaderTab.swift; sourceTree = "<group>"; };
 		B0ED8A401BB33DFD00A5E638 /* UIHeaderTabs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIHeaderTabs.swift; sourceTree = "<group>"; };
@@ -96,7 +94,6 @@
 		B0ED8A3C1BB33DFD00A5E638 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				B0ED8A3D1BB33DFD00A5E638 /* TabGroupControllable.swift */,
 				B0ED8A3E1BB33DFD00A5E638 /* TabGroupsControllable.swift */,
 			);
 			name = Protocols;
@@ -194,7 +191,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0ED8A431BB33DFD00A5E638 /* TabGroupControllable.swift in Sources */,
 				B0ED8A451BB33DFD00A5E638 /* UIHeaderTab.swift in Sources */,
 				B0ED8A461BB33DFD00A5E638 /* UIHeaderTabs.swift in Sources */,
 				B0ED8A441BB33DFD00A5E638 /* TabGroupsControllable.swift in Sources */,
@@ -374,6 +370,7 @@
 				B0ED8A261BB33DB900A5E638 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

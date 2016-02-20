@@ -3,6 +3,10 @@ Simple Swift 2.0 nib and protocols to implement header tabs in any iOS applicati
 
 ![Example](/UIHeaderTabsExample/Example.png?raw=true)
 
+## Latest Update 2016-02-20
+
+I removed the secondary child view controller protocol, *TabGroupControllable*, and replaced *controllerStoryboards* and *controllers* list with a function *tabControllersInitializer* to create each controller for each tab. I renamed many of the protocol variables to be more specific to tabs. Added some boundaries to the individual tab nib, so that it does not overflow its space (although you may want to switch the tabs nib UIStackView to use proportional spacing rather than equal spacing if you have a mix of large/small tabs that won't fit inside boxes divided equally - but the idea is that you wholly customize the nibs to your own app anyway).
+
 ## Including UIHeaderTabs Your App
 
 Add the UIHeaderTabs folder to your app. (There is no Carthage or Cocoapods option, sorry).
@@ -17,15 +21,15 @@ You will need at least two pages to implement header tabs - a parent tab groups 
 #### Required parameters:
 
 - **var tabs: UIHeaderTabs!** - from an @IBOutlet placeholder
-- **var pageControllerWrapper: UIView!** - from an @IBOutlet placeholder
-- **var orderedGroups: \[String\]** - a list of strings to use as tab titles
-- **var controllerStoryboards: \[String\]** - the storyboard names to use as tab content. These can all be the same if they are going to a shared table view controller, or all different if you have multiple pages you'd like to show in tabs. *Note: Because I use IBIncludedStoryboard in all my apps, this is not configured to use same-storyboard scene identifiers (although it would be easy enough to change it to do so). Put your tab content into a separate storyboard and use that filename in this list. If you need to invoke a segue in the main storyboard from the child tab page, you can use: groupsController?.performSegueWithIdentifier("My Segue Identifier", sender: nil).*
+- **var tabsContentWrapper: UIView!** - from an @IBOutlet placeholder
+- **var tabNames: \[String\]** - a list of strings to use as tab titles
+- **func tabControllersInitializer(tabName: String) -> UIViewController?** - returns an instantiated view controller to display under that tab. See the example project for examples - it is not hard to do.
 
 Please add the following additional parameters as-is, so TabGroupsControllable can use them:
 
-    var pageViewController: UIPageViewController?
-    var controllers: [UIViewController] = []
-    var currentIndex = 0
+    var tabsPageViewController: UIPageViewController?
+    var tabControllers: [UIViewController] = []
+    var tabCurrentIndex = 0
 
 #### Required functions:
 
@@ -33,27 +37,16 @@ Please add the following functions as-is, to call TabsGroupsControllable functio
 
 
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        return handlePageViewController(pageViewController, viewControllerBeforeViewController: viewController)
+        return handleTabsPageViewController(pageViewController, viewControllerBeforeViewController: viewController)
     }
-    
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        return handlePageViewController(pageViewController, viewControllerAfterViewController: viewController)
+        return handleTabsPageViewController(pageViewController, viewControllerAfterViewController: viewController)
     }
-    
     func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        handlePageViewController(pageViewController, didFinishAnimating: finished, previousViewControllers: previousViewControllers, transitionCompleted: completed)
+        handleTabsPageViewController(pageViewController, didFinishAnimating: finished, previousViewControllers: previousViewControllers, transitionCompleted: completed)
     }
 
-Additionally, you will need to call setupTabGroups() inside your viewDidLoad()
-
-
-### Implementing TabGroupControllable Protocol
-
-#### Required parameters:
-
-- **var group: String** - a default tab title (will be set by TabGroupsControllable parent)
-- **var groupIndex: Int** - a default tab index (will be set by TabGroupsControllable parent)
-- **weak var groupsController: UIViewController?** - do not initialize: this will be set by TabGroupsControllable parent. You can use it yourself, however, whenever you want to call out to the parent tabs group page.
+Additionally, you will need to call setupTabs() inside your viewDidLoad()
     
     
     
